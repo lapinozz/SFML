@@ -32,6 +32,7 @@
 #include <SFML/Audio/SoundSource.hpp>
 
 #include <cstdlib>
+#include <memory>
 
 
 namespace sf
@@ -229,9 +230,18 @@ private:
     void reattachBuffer();
 
     ////////////////////////////////////////////////////////////
+    /// \brief Get the sound object
+    ///
+    /// \return The sound object
+    ///
+    ////////////////////////////////////////////////////////////
+    void* getSound() const override;
+
+    ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    const SoundBuffer* m_buffer{}; //!< Sound buffer bound to the source
+    struct Impl;
+    const std::unique_ptr<Impl> m_impl; //!< Implementation details
 };
 
 } // namespace sf

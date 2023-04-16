@@ -4,10 +4,8 @@ set(SRCROOT ${PROJECT_SOURCE_DIR}/src/SFML/Audio)
 
 # all source files
 set(SRC
-    ${SRCROOT}/ALCheck.cpp
-    ${SRCROOT}/ALCheck.hpp
-    ${SRCROOT}/AlResource.cpp
-    ${INCROOT}/AlResource.hpp
+    ${SRCROOT}/AudioResource.cpp
+    ${INCROOT}/AudioResource.hpp
     ${SRCROOT}/AudioDevice.cpp
     ${SRCROOT}/AudioDevice.hpp
     ${INCROOT}/Export.hpp
@@ -21,6 +19,7 @@ set(SRC
     ${INCROOT}/SoundBuffer.hpp
     ${SRCROOT}/SoundBufferRecorder.cpp
     ${INCROOT}/SoundBufferRecorder.hpp
+    ${INCROOT}/SoundChannel.hpp
     ${SRCROOT}/InputSoundFile.cpp
     ${INCROOT}/InputSoundFile.hpp
     ${SRCROOT}/OutputSoundFile.cpp
@@ -57,18 +56,14 @@ set(CODECS_SRC
 )
 source_group("codecs" FILES ${CODECS_SRC})
 
-# let CMake know about our additional audio libraries paths (on Windows and macOS)
-if(SFML_OS_WINDOWS)
-    list(APPEND CMAKE_INCLUDE_PATH "${PROJECT_SOURCE_DIR}/extlibs/headers/AL")
-elseif(SFML_OS_MACOS)
+# let CMake know about our additional audio libraries paths (on Android and OSX)
+if(SFML_OS_MACOSX)
     list(APPEND CMAKE_LIBRARY_PATH "${PROJECT_SOURCE_DIR}/extlibs/libs-macos/Frameworks")
 elseif(SFML_OS_ANDROID)
-    list(APPEND CMAKE_INCLUDE_PATH "${PROJECT_SOURCE_DIR}/extlibs/headers/AL")
     list(APPEND CMAKE_INCLUDE_PATH "${PROJECT_SOURCE_DIR}/extlibs/android")
 endif()
 
 # find external libraries
-find_package(OpenAL REQUIRED)
 find_package(Vorbis REQUIRED)
 find_package(FLAC REQUIRED)
 
@@ -82,10 +77,13 @@ target_compile_definitions(sfml-audio PRIVATE OV_EXCLUDE_STATIC_CALLBACKS FLAC__
 # setup dependencies
 target_link_libraries(sfml-audio
                       PUBLIC SFML::System
-                      PRIVATE OpenAL::OpenAL Vorbis::vorbis FLAC::FLAC)
+                      PRIVATE Vorbis::vorbis FLAC::FLAC)
 if(NOT SFML_OS_IOS)
     target_link_libraries(sfml-audio PRIVATE Vorbis::vorbisfile Vorbis::vorbisenc)
 endif()
+
+# miniaudio sources
+target_include_directories(sfml-audio SYSTEM PRIVATE "${PROJECT_SOURCE_DIR}/extlibs/headers/miniaudio")
 
 # minimp3 sources
 target_include_directories(sfml-audio SYSTEM PRIVATE "${PROJECT_SOURCE_DIR}/extlibs/headers/minimp3")
