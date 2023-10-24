@@ -30,15 +30,13 @@
 #include <SFML/System/Err.hpp>
 #include <SFML/System/Sleep.hpp>
 
-#include <miniaudio.h>
-
 #include <algorithm>
+#include <miniaudio.h>
 #include <optional>
 #include <ostream>
 
 #include <cassert>
 #include <cstring>
-
 
 
 namespace sf
@@ -313,11 +311,12 @@ unsigned int SoundRecorder::getSampleRate() const
 std::vector<std::string> SoundRecorder::getAvailableDevices()
 {
     // Convert the internal miniaudio device list into a name-only list
-    std::vector<std::string> deviceNameList;
     const auto               devices = Impl::getAvailableDevices();
+    std::vector<std::string> deviceNameList;
+    deviceNameList.reserve(devices.size());
 
     for (const auto& device : devices)
-        deviceNameList.push_back(device.name);
+        deviceNameList.emplace_back(device.name);
 
     return deviceNameList;
 }

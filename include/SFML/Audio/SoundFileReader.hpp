@@ -31,8 +31,9 @@
 
 #include <SFML/Audio/SoundChannel.hpp>
 
-#include <cstdint>
 #include <vector>
+
+#include <cstdint>
 
 
 namespace sf

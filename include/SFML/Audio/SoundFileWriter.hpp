@@ -32,6 +32,7 @@
 #include <SFML/Audio/SoundChannel.hpp>
 
 #include <filesystem>
+#include <vector>
 
 
 namespace sf

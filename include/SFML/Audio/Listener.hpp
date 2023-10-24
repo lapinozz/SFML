@@ -53,9 +53,9 @@ namespace sf::Listener
 ////////////////////////////////////////////////////////////
 struct Cone
 {
-    Angle innerAngle; //!< Inner angle, default is 360 degrees
-    Angle outerAngle; //!< Outer angle, default is 360 degrees
-    float outerGain;  //!< Outer gain, default is 1
+    Angle innerAngle;  //!< Inner angle, default is 360 degrees
+    Angle outerAngle;  //!< Outer angle, default is 360 degrees
+    float outerGain{}; //!< Outer gain, default is 1
 };
 
 ////////////////////////////////////////////////////////////

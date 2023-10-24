@@ -30,8 +30,8 @@
 #include <SFML/Audio/Export.hpp>
 
 #include <SFML/Audio/AudioResource.hpp>
-#include <SFML/System/Angle.hpp>
 
+#include <SFML/System/Angle.hpp>
 #include <SFML/System/Vector3.hpp>
 
 #include <memory>
@@ -71,9 +71,9 @@ public:
     ////////////////////////////////////////////////////////////
     struct Cone
     {
-        Angle innerAngle; //!< Inner angle, default is 360 degrees
-        Angle outerAngle; //!< Outer angle, default is 360 degrees
-        float outerGain;  //!< Outer gain, default is 1
+        Angle innerAngle;  //!< Inner angle, default is 360 degrees
+        Angle outerAngle;  //!< Outer angle, default is 360 degrees
+        float outerGain{}; //!< Outer gain, default is 1
     };
 
     ////////////////////////////////////////////////////////////

@@ -34,8 +34,9 @@
 namespace sf
 {
 // NOLINTBEGIN(readability-make-member-function-const)
+// NOLINTBEGIN(clang-analyzer-cplusplus.PureVirtualCall)
 ////////////////////////////////////////////////////////////
-SoundSource::SoundSource(const SoundSource& copy)
+SoundSource::SoundSource(const SoundSource& copy) : AudioResource(copy)
 {
     setPitch(copy.getPitch());
     setPan(copy.getPan());
@@ -232,10 +233,10 @@ Vector3f SoundSource::getPosition() const
     if (const auto* sound = static_cast<const ma_sound*>(getSound()); sound)
     {
         auto position = ma_sound_get_position(sound);
-        return Vector3f(position.x, position.y, position.z);
+        return {position.x, position.y, position.z};
     }
 
-    return Vector3f();
+    return {};
 }
 
 
@@ -245,10 +246,10 @@ Vector3f SoundSource::getDirection() const
     if (const auto* sound = static_cast<const ma_sound*>(getSound()); sound)
     {
         auto direction = ma_sound_get_direction(sound);
-        return Vector3f(direction.x, direction.y, direction.z);
+        return {direction.x, direction.y, direction.z};
     }
 
-    return Vector3f();
+    return {};
 }
 
 
@@ -259,7 +260,7 @@ SoundSource::Cone SoundSource::getCone() const
     {
         float innerAngle = 0.f;
         float outerAngle = 0.f;
-        Cone cone;
+        Cone  cone;
         ma_sound_get_cone(sound, &innerAngle, &outerAngle, &cone.outerGain);
         cone.innerAngle = sf::radians(innerAngle);
         cone.outerAngle = sf::radians(outerAngle);
@@ -276,10 +277,10 @@ Vector3f SoundSource::getVelocity() const
     if (const auto* sound = static_cast<const ma_sound*>(getSound()); sound)
     {
         auto velocity = ma_sound_get_velocity(sound);
-        return Vector3f(velocity.x, velocity.y, velocity.z);
+        return {velocity.x, velocity.y, velocity.z};
     }
 
-    return Vector3f();
+    return {};
 }
 
 
@@ -386,6 +387,7 @@ SoundSource::Status SoundSource::getStatus() const
 
     return Stopped;
 }
+// NOLINTEND(clang-analyzer-cplusplus.PureVirtualCall)
 // NOLINTEND(readability-make-member-function-const)
 
 } // namespace sf

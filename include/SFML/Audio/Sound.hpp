@@ -31,8 +31,9 @@
 
 #include <SFML/Audio/SoundSource.hpp>
 
-#include <cstdlib>
 #include <memory>
+
+#include <cstdlib>
 
 
 namespace sf

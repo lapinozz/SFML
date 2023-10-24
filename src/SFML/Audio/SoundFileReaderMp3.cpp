@@ -58,8 +58,8 @@
 #include <algorithm>
 #include <ostream>
 
-#include <cstdint>
 #include <cassert>
+#include <cstdint>
 #include <cstring>
 
 

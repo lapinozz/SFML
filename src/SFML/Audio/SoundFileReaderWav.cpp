@@ -307,6 +307,7 @@ bool SoundFileReaderWav::parseHeader(Info& info)
                 if (!decode(*m_stream, channelMask))
                     return false;
 
+                // NOLINTBEGIN(readability-identifier-naming)
                 // For WAVE channel mapping refer to: https://learn.microsoft.com/en-us/previous-versions/windows/hardware/design/dn653308(v=vs.85)#default-channel-ordering
                 static constexpr auto SPEAKER_FRONT_LEFT            = 0x1u;
                 static constexpr auto SPEAKER_FRONT_RIGHT           = 0x2u;
@@ -326,6 +327,7 @@ bool SoundFileReaderWav::parseHeader(Info& info)
                 static constexpr auto SPEAKER_TOP_BACK_LEFT         = 0x8000u;
                 static constexpr auto SPEAKER_TOP_BACK_CENTER       = 0x10000u;
                 static constexpr auto SPEAKER_TOP_BACK_RIGHT        = 0x20000u;
+                // NOLINTEND(readability-identifier-naming)
 
                 info.channelMap.clear();
 

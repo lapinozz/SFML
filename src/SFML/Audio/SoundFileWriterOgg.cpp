@@ -132,7 +132,8 @@ bool SoundFileWriterOgg::open(const std::filesystem::path&     filename,
 
     // Build the remap table
     for (auto i = 0u; i < channelCount; ++i)
-        m_remapTable[i] = static_cast<std::size_t>(std::find(channelMap.begin(), channelMap.end(), targetChannelMap[i]) - channelMap.begin());
+        m_remapTable[i] = static_cast<std::size_t>(
+            std::find(channelMap.begin(), channelMap.end(), targetChannelMap[i]) - channelMap.begin());
 
     // Save the channel count
     m_channelCount = channelCount;

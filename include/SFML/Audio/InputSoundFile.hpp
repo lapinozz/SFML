@@ -242,7 +242,7 @@ private:
     std::uint64_t                               m_sampleCount{};          //!< Total number of samples in the file
     unsigned int                                m_channelCount{};         //!< Number of channels of the sound
     unsigned int                                m_sampleRate{};           //!< Number of samples per second
-    std::vector<SoundChannel>                   m_channelMap;             //!< The map of position in sample frame to sound channel
+    std::vector<SoundChannel>                   m_channelMap; //!< The map of position in sample frame to sound channel
 };
 
 } // namespace sf

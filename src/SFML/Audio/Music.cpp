@@ -25,9 +25,8 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/Audio/Music.hpp>
-
 #include <SFML/Audio/InputSoundFile.hpp>
+#include <SFML/Audio/Music.hpp>
 
 #include <SFML/System/Err.hpp>
 #include <SFML/System/Time.hpp>
@@ -172,8 +171,8 @@ void Music::setLoopPoints(TimeSpan timePoints)
     // When we apply this change, we need to "reset" this instance and its buffer
 
     // Get old playing status and position
-    Status oldStatus = getStatus();
-    Time   oldPos    = getPlayingOffset();
+    const Status oldStatus = getStatus();
+    const Time   oldPos    = getPlayingOffset();
 
     // Unload
     stop();
@@ -194,11 +193,11 @@ void Music::setLoopPoints(TimeSpan timePoints)
 ////////////////////////////////////////////////////////////
 bool Music::onGetData(SoundStream::Chunk& data)
 {
-    std::lock_guard lock(m_impl->m_mutex);
+    const std::lock_guard lock(m_impl->m_mutex);
 
-    std::size_t   toFill        = m_impl->m_samples.size();
-    std::uint64_t currentOffset = m_impl->m_file.getSampleOffset();
-    std::uint64_t loopEnd       = m_impl->m_loopSpan.offset + m_impl->m_loopSpan.length;
+    std::size_t         toFill        = m_impl->m_samples.size();
+    std::uint64_t       currentOffset = m_impl->m_file.getSampleOffset();
+    const std::uint64_t loopEnd       = m_impl->m_loopSpan.offset + m_impl->m_loopSpan.length;
 
     // If the loop end is enabled and imminent, request less data.
     // This will trip an "onLoop()" call from the underlying SoundStream,
@@ -220,7 +219,7 @@ bool Music::onGetData(SoundStream::Chunk& data)
 ////////////////////////////////////////////////////////////
 void Music::onSeek(Time timeOffset)
 {
-    std::lock_guard lock(m_impl->m_mutex);
+    const std::lock_guard lock(m_impl->m_mutex);
     m_impl->m_file.seek(timeOffset);
 }
 
@@ -229,8 +228,8 @@ void Music::onSeek(Time timeOffset)
 std::int64_t Music::onLoop()
 {
     // Called by underlying SoundStream so we can determine where to loop.
-    std::lock_guard lock(m_impl->m_mutex);
-    std::uint64_t   currentOffset = m_impl->m_file.getSampleOffset();
+    const std::lock_guard lock(m_impl->m_mutex);
+    const std::uint64_t   currentOffset = m_impl->m_file.getSampleOffset();
     if (getLoop() && (m_impl->m_loopSpan.length != 0) &&
         (currentOffset == m_impl->m_loopSpan.offset + m_impl->m_loopSpan.length))
     {
